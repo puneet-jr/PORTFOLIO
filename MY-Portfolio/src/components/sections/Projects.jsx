@@ -23,8 +23,6 @@ export const Projects = () => {
             github: "https://github.com/puneet-jr/PORTFOLIO",
             description: "My personal portfolio website showcasing my projects, skills, and contact information.",
         },
-    
-
     ];
 
     const [openDesc, setOpenDesc] = useState(Array(projectList.length).fill(false));
