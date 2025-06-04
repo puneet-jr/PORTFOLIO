@@ -20,7 +20,7 @@ export const Projects = () => {
         },
         {
             name: "Portfolio Website",
-            github: "",
+            github: "https://github.com/puneet-jr/PORTFOLIO",
             description: "My personal portfolio website showcasing my projects, skills, and contact information.",
         },
     
