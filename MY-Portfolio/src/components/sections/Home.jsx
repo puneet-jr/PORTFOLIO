@@ -1,4 +1,6 @@
 import { RevealOnScroll } from "./RevealOnScroll";
+import { Link } from "react-router-dom";
+
 export const Home = () => {
     return (
         <section id="home" className="min-h-screen flex flex-col justify-center items-center relative pt-0 pb-0">
@@ -21,24 +23,24 @@ export const Home = () => {
                         </div>
                     </div>
                     <div className="flex flex-wrap justify-center gap-4">
-                        <a
-                            href="#projects"
+                        <Link
+                            to="/projects"
                             className="bg-cyan-500 text-white py-3 px-6 rounded-full font-medium transition hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(34,211,238,0.4)]"
                         >
                             View Projects
-                        </a>
-                        <a
-                            href="#about"
+                        </Link>
+                        <Link
+                            to="/about"
                             className="bg-cyan-500 text-white py-3 px-6 rounded-full font-medium transition hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(34,211,238,0.4)]"
                         >
                             About Me
-                        </a>
-                        <a
-                            href="#contact"
+                        </Link>
+                        <Link
+                            to="/contact"
                             className="bg-cyan-500 text-white py-3 px-6 rounded-full font-medium transition hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(34,211,238,0.4)]"
                         >
                             Contact
-                        </a>
+                        </Link>
                         <a
                             href="https://github.com/puneet-jr"
                             target="_blank"
