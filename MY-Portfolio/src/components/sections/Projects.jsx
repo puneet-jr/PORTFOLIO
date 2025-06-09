@@ -5,8 +5,14 @@ export const Projects = () => {
     const projectList = [
          {
             name: "Waste Truck Tracking System",
-            github: "https://github.com/puneet-jr/Waste_Trucks_Tracker",
+            github: "https://github.com/puneet-jr/Waste-management-fullstack",
             description: "A system to track waste trucks in real-time, improving efficiency and transparency for municipal waste management.",
+        },
+
+              {
+            name:"Role-Based-Authorization",
+            github:"https://github.com/puneet-jr/Role-Based-Authentication",
+            description:"A secure authentication and authorization system implementing role-based access control (RBAC). Features user registration, login, JWT token management, and different permission levels for Admin, Moderator, and User roles with protected routes and middleware."
         },
         {
             name: "Store-API",
@@ -15,7 +21,7 @@ export const Projects = () => {
         },
         {
             name: "URL-Shortner",
-            github: "https://github.com/puneet-jr/server-app",
+            github: "https://github.com/puneet-jr/URL-SHORTNER",
             description: "A web application to shorten URLs, track clicks, and manage links with authentication.",
         },
         {
@@ -23,6 +29,7 @@ export const Projects = () => {
             github: "https://github.com/puneet-jr/PORTFOLIO",
             description: "My personal portfolio website showcasing my projects, skills, and contact information.",
         },
+        
     ];
 
     const [openDesc, setOpenDesc] = useState(Array(projectList.length).fill(false));
