@@ -1,36 +1,115 @@
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 export const LoadingScreen = ({ onComplete }) => {
-    const [text, setText] = useState("");
-    const fullText = " WELCOME! ";
+    const [progress, setProgress] = useState(0);
+    const [displayText, setDisplayText] = useState("");
+    const welcomeText = "Welcome to my Portfolio";
 
     useEffect(() => {
-        let index = 0;
-        const interval = setInterval(() => {
-            setText(fullText.substring(0, index));
-            index++;
-
-            if (index > fullText.length) {
-                clearInterval(interval);
-
-                setTimeout(() => {
-                    onComplete();
-                }, 1000);
+        // Typewriter effect
+        let textIndex = 0;
+        const textInterval = setInterval(() => {
+            if (textIndex <= welcomeText.length) {
+                setDisplayText(welcomeText.slice(0, textIndex));
+                textIndex++;
+            } else {
+                clearInterval(textInterval);
             }
-        }, 100);
+        }, 80);
 
-        return () => clearInterval(interval);
+        // Progress animation
+        const progressInterval = setInterval(() => {
+            setProgress(prev => {
+                if (prev >= 100) {
+                    clearInterval(progressInterval);
+                    setTimeout(() => onComplete(), 500);
+                    return 100;
+                }
+                return prev + 2;
+            });
+        }, 50);
+
+        return () => {
+            clearInterval(textInterval);
+            clearInterval(progressInterval);
+        };
     }, [onComplete]);
 
     return (
-        <div className="fixed inset-0 z-50 bg-black text-gray-100 flex flex-col items-center justify-center">
-            <div className="mb-4 text-4xl font-mono font-bold">
-                {text}
-                <span className="animate-blink ml-1"> | </span>
+        <motion.div 
+            className="fixed inset-0 z-50 bg-black flex flex-col items-center justify-center"
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+        >
+            <div className="text-center space-y-8">
+                {/* Logo */}
+                <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                    className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto animate-pulse-glow"
+                >
+                    <span className="text-white font-bold text-2xl">P</span>
+                </motion.div>
+
+                {/* Welcome Text */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                    className="space-y-4"
+                >
+                    <h1 className="text-3xl font-bold text-white">
+                        {displayText}
+                        <motion.span
+                            animate={{ opacity: [1, 0, 1] }}
+                            transition={{ duration: 1, repeat: Infinity }}
+                            className="text-blue-400 ml-1"
+                        >
+                            |
+                        </motion.span>
+                    </h1>
+                    <p className="text-gray-400 text-lg">Loading amazing content...</p>
+                </motion.div>
+
+                {/* Progress Bar */}
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5, delay: 0.8 }}
+                    className="w-80 mx-auto space-y-2"
+                >
+                    <div className="flex justify-between text-sm text-gray-400">
+                        <span>Loading</span>
+                        <span>{progress}%</span>
+                    </div>
+                    <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                        <motion.div
+                            className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+                            initial={{ width: 0 }}
+                            animate={{ width: `${progress}%` }}
+                            transition={{ duration: 0.3 }}
+                        />
+                    </div>
+                </motion.div>
+
+                {/* Loading Dots */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 1 }}
+                    className="flex space-x-2 justify-center"
+                >
+                    {[0, 1, 2].map((index) => (
+                        <motion.div
+                            key={index}
+                            className="w-3 h-3 bg-blue-500 rounded-full loading-dot"
+                            style={{ animationDelay: `${index * 0.2}s` }}
+                        />
+                    ))}
+                </motion.div>
             </div>
-            <div className="w-[200px] h-[2px] bg-gray-800 rounded relative overflow-hidden">
-                <div className="w-[40%] h-full bg-blue-500 shadow-[0_0_15px_#3b82f6] animate-loading-bar"></div>
-            </div>
-        </div>
+        </motion.div>
     );
 };
