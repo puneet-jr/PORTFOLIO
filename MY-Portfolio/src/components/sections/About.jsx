@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 export const About = () => {
     const skills = {
         frontend: ["React", "TypeScript", "TailwindCSS", "Next.js", "HTML5", "CSS3"],
-        backend: ["Node.js", "MongoDB", "PostgreSQL", "Express.js", "Docker", "AWS"],
+        backend: ["Node.js", "MongoDB", "PostgreSQL", "MYSQL","Express.js", "Docker", "AWS"],
         languages: ["JavaScript", "TypeScript", "Python", "Java", "C++", "C"],
-        tools: ["Git", "GitHub", "VS Code", "Figma", "Postman", "Linux"]
+        tools: ["Git", "GitHub", "VS Code", "Postman","Thunder Client", "Linux"]
     };
 
     const competencies = [
@@ -18,7 +18,6 @@ export const About = () => {
     ];
 
     const achievements = [
-        { icon: "🏆", title: "Problem Solver", description: "500+ DSA problems solved" },
         { icon: "🚀", title: "Full Stack Projects", description: "5+ complete web applications" },
         { icon: "📚", title: "Continuous Learner", description: "Always exploring new technologies" },
         { icon: "🤝", title: "Team Player", description: "Collaborative development experience" }
