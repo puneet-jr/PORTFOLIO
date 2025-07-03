@@ -175,14 +175,14 @@ export const About = () => {
                     </div>
                 </motion.div>
 
-                {/* Add Achievement Section */}
+                {/* Achievements Section with Fixed Spacing */}
                 <motion.div variants={itemVariants} className="mb-16">
                     <h3 className="text-3xl font-bold text-center mb-8">
                         <span className="bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                             Achievements & Highlights
                         </span>
                     </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
                         {achievements.map((achievement, index) => (
                             <motion.div
                                 key={index}
@@ -199,36 +199,42 @@ export const About = () => {
 
                 <motion.div variants={itemVariants} className="text-center mt-16">
                     <motion.div 
-                        className="inline-block p-8 bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl max-w-2xl"
-                        whileHover={{ scale: 1.02 }}
+                        className="inline-block p-10 bg-gray-800/60 backdrop-blur-xl border border-gray-600/50 rounded-3xl max-w-3xl hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500"
+                        whileHover={{ scale: 1.02, y: -5, borderColor: "rgba(59, 130, 246, 0.6)" }}
                     >
-                        <h3 className="text-2xl font-bold mb-4 text-white">Ready to Collaborate?</h3>
-                        <p className="text-gray-400 mb-6">
+                        <motion.h3 
+                            className="text-3xl font-bold mb-6 text-white"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                        >
+                            Ready to Collaborate?
+                        </motion.h3>
+                        <motion.p 
+                            className="text-gray-300 mb-8 text-lg leading-relaxed"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.3 }}
+                        >
                             I'm always excited to discuss new opportunities, collaborate on projects, 
-                            or just chat about technology and innovation.
-                        </p>
-                        <div className="flex flex-wrap gap-4 justify-center">
-                            <motion.a
-                                href="/resume.pdf" // Add your resume file
-                                download
-                                className="px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-lg font-medium hover:from-green-600 hover:to-green-700 transition-all flex items-center gap-2"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                                </svg>
-                                Download Resume
-                            </motion.a>
-                            <motion.button
-                                className="px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium hover:from-blue-600 hover:to-purple-700 transition-all"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                onClick={() => window.location.href = '/contact'}
-                            >
+                            or just chat about technology and innovation. Let's create something amazing together!
+                        </motion.p>
+                        <motion.button
+                            className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl font-semibold hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl"
+                            whileHover={{ scale: 1.05, y: -2 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => window.location.href = '/contact'}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.4 }}
+                        >
+                            <span className="flex items-center gap-2">
                                 Get In Touch
-                            </motion.button>
-                        </div>
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                </svg>
+                            </span>
+                        </motion.button>
                     </motion.div>
                 </motion.div>
             </motion.div>
