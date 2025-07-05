@@ -1,320 +1,133 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { motion } from 'framer-motion';
+import { ProfileImage } from '../ProfileImage';
+import { useNavigate } from 'react-router-dom';
 
-export const Home = () => {
-    const [displayText, setDisplayText] = useState("");
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const roles = ["Full Stack Developer", "Problem Solver", "Tech Enthusiast", "Code Artist"];
+const Home = () => {
+    const navigate = useNavigate();
 
-    useEffect(() => {
-        const handleMouseMove = (e) => {
-            setMousePosition({
-                x: (e.clientX - window.innerWidth / 2) / 50,
-                y: (e.clientY - window.innerHeight / 2) / 50,
-            });
-        };
-
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, []);
-
-    useEffect(() => {
-        const currentRole = roles[currentIndex];
-        let charIndex = 0;
-        let isDeleting = false;
-
-        const typeInterval = setInterval(() => {
-            if (!isDeleting && charIndex <= currentRole.length) {
-                setDisplayText(currentRole.slice(0, charIndex));
-                charIndex++;
-            } else if (isDeleting && charIndex >= 0) {
-                setDisplayText(currentRole.slice(0, charIndex));
-                charIndex--;
-            }
-
-            if (charIndex === currentRole.length + 1 && !isDeleting) {
-                setTimeout(() => { isDeleting = true; }, 2000);
-            }
-
-            if (charIndex === 0 && isDeleting) {
-                isDeleting = false;
-                setCurrentIndex((prev) => (prev + 1) % roles.length);
-                clearInterval(typeInterval);
-            }
-        }, isDeleting ? 50 : 100);
-
-        return () => clearInterval(typeInterval);
-    }, [currentIndex]);
-
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                delayChildren: 0.3,
-                staggerChildren: 0.2
-            }
-        }
+    const handleViewWork = () => {
+        navigate('/projects');
     };
 
-    const itemVariants = {
-        hidden: { y: 20, opacity: 0 },
-        visible: {
-            y: 0,
-            opacity: 1,
-            transition: { duration: 0.8, ease: "easeOut" }
-        }
+    const handleContact = () => {
+        navigate('/contact');
     };
 
     return (
-        <section className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-            {/* Enhanced animated background with parallax */}
-            <motion.div 
-                className="absolute inset-0 bg-gradient-radial"
-                style={{
-                    transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-                }}
-            />
-            <div className="absolute inset-0 bg-dot-pattern opacity-20"></div>
-            
-            {/* Professional floating particles */}
+        <section className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
+            {/* Background decorations */}
             <div className="absolute inset-0 overflow-hidden">
-                {[...Array(30)].map((_, i) => (
-                    <motion.div
-                        key={i}
-                        className="absolute w-1 h-1 bg-blue-300/40 rounded-full"
-                        style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
-                        }}
-                        animate={{
-                            y: [0, -200, 0],
-                            opacity: [0.2, 0.8, 0.2],
-                            scale: [1, 1.5, 1],
-                        }}
-                        transition={{
-                            duration: 4 + Math.random() * 3,
-                            repeat: Infinity,
-                            delay: Math.random() * 3,
-                            ease: "easeInOut",
-                        }}
-                    />
-                ))}
+                <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
             </div>
-            
-            {/* Enhanced floating geometric shapes */}
-            <motion.div 
-                className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl rotate-45"
-                animate={{ 
-                    rotate: [45, 90, 45],
-                    scale: [1, 1.1, 1],
-                }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                    transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)`,
-                }}
-            />
-            <motion.div 
-                className="absolute bottom-20 right-10 w-48 h-48 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-full"
-                animate={{ 
-                    scale: [1, 1.2, 1],
-                    opacity: [0.3, 0.6, 0.3],
-                }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                style={{
-                    transform: `translate(${mousePosition.x * -0.3}px, ${mousePosition.y * -0.3}px)`,
-                }}
-            />
 
-            <motion.div 
-                className="container mx-auto px-6 text-center z-10 max-w-6xl"
-                variants={containerVariants}
-                initial="hidden"
-                animate="visible"
-            >
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-                    {/* Enhanced Profile Image Section */}
-                    <motion.div 
-                        variants={itemVariants}
-                        className="lg:w-1/2 flex justify-center"
+            <div className="relative z-10 container mx-auto px-4 py-4 min-h-screen">
+                <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen gap-6 lg:gap-8">
+                    
+                    {/* Left side - Profile Image */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        className="flex-shrink-0 order-1 lg:order-1"
                     >
-                        <div className="relative">
-                            {/* Professional animated rings */}
-                            <motion.div
-                                className="absolute inset-0 rounded-full border border-blue-400/20"
-                                style={{ padding: '30px' }}
-                                animate={{ rotate: 360 }}
-                                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                            />
-                            <motion.div
-                                className="absolute inset-0 rounded-full border border-purple-400/15"
-                                style={{ padding: '50px' }}
-                                animate={{ rotate: -360 }}
-                                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                            />
-                            
-                            {/* Enhanced Profile Image */}
-                            <motion.div
-                                className="relative w-80 h-80 rounded-full overflow-hidden border-2 border-blue-400/30 shadow-2xl backdrop-blur-sm"
-                                whileHover={{ 
-                                    scale: 1.05,
-                                    boxShadow: "0 25px 50px rgba(59, 130, 246, 0.3)",
-                                }}
-                                transition={{ duration: 0.4, ease: "easeOut" }}
-                            >
-                                <img 
-                                    src="/profile.jpg" 
-                                    alt="Puneet Janakiram"
-                                    className="w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                                
-                                {/* Professional overlay */}
-                                <motion.div
-                                    className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0"
-                                    whileHover={{ opacity: 1 }}
-                                    transition={{ duration: 0.3 }}
-                                />
-                            </motion.div>
-                            
-                            {/* Professional tech icons */}
-                            <motion.div
-                                className="absolute -top-6 -right-6 w-14 h-14 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center text-white shadow-lg"
-                                whileHover={{ scale: 1.1, rotate: 5 }}
-                                animate={{ y: [0, -8, 0] }}
-                                transition={{ duration: 3, repeat: Infinity }}
-                            >
-                                ⚛️
-                            </motion.div>
-                            <motion.div
-                                className="absolute -bottom-6 -left-6 w-14 h-14 bg-gradient-to-r from-green-500 to-green-600 rounded-xl flex items-center justify-center text-white shadow-lg"
-                                whileHover={{ scale: 1.1, rotate: -5 }}
-                                animate={{ y: [0, 8, 0] }}
-                                transition={{ duration: 3.5, repeat: Infinity }}
-                            >
-                                🟢
-                            </motion.div>
-                            <motion.div
-                                className="absolute top-1/2 -right-10 w-12 h-12 bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl flex items-center justify-center text-white shadow-lg"
-                                whileHover={{ scale: 1.1 }}
-                                animate={{ x: [0, 8, 0] }}
-                                transition={{ duration: 4, repeat: Infinity }}
-                            >
-                                💻
-                            </motion.div>
-                        </div>
+                        <ProfileImage
+                            src="/myprofile.jpg"
+                            alt="Puneet Janakiram"
+                            size="large"
+                            className="mx-auto"
+                        />
                     </motion.div>
 
-                    {/* Enhanced Text Content */}
-                    <motion.div variants={itemVariants} className="lg:w-1/2 text-left lg:text-left">
-                        <motion.div className="mb-8">
-                            <motion.h1 
-                                className="text-5xl md:text-7xl font-bold mb-6"
-                                initial={{ scale: 0.5, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                transition={{ duration: 1, delay: 0.2, ease: "backOut" }}
-                            >
-                                <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-cyan-400 bg-clip-text text-transparent animate-gradient">
-                                    Puneet
+                    {/* Right side - Content */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.4 }}
+                        className="flex-1 text-center lg:text-left order-2 lg:order-2 max-w-2xl"
+                    >
+                        {/* Greeting */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.6 }}
+                            className="mb-3"
+                        >
+                            <span className="text-blue-400 text-lg md:text-xl font-medium">
+                                👋 Hello, I'm
+                            </span>
+                        </motion.div>
+
+                        {/* Name */}
+                        <motion.h1
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.8 }}
+                            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4"
+                        >
+                            Puneet Janakiram
+                        </motion.h1>
+
+                        {/* Role */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1 }}
+                            className="mb-6"
+                        >
+                            <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold">
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
+                                    Full Stack Developer
                                 </span>
-                            </motion.h1>
-                            
-                            <motion.div 
-                                className="text-xl md:text-2xl font-light text-gray-300 mb-6"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.5, duration: 0.8 }}
-                            >
-                                I'm a{" "}
-                                <span className="text-blue-400 font-semibold min-h-[1.2em] inline-block">
-                                    {displayText}
-                                    <motion.span 
-                                        className="text-blue-400 ml-1"
-                                        animate={{ opacity: [1, 0, 1] }}
-                                        transition={{ duration: 1, repeat: Infinity }}
-                                    >
-                                        |
-                                    </motion.span>
-                                </span>
-                            </motion.div>
+                            </h2>
                         </motion.div>
 
-                        <motion.div 
-                            variants={itemVariants} 
-                            className="mb-8"
+                        {/* Description */}
+                        <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.7, duration: 0.8 }}
+                            transition={{ duration: 0.6, delay: 1.2 }}
+                            className="text-gray-300 text-lg md:text-xl leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0"
                         >
-                            <p className="text-lg text-gray-400 leading-relaxed">
-                                Passionate about creating exceptional digital experiences through clean code, 
-                                innovative solutions, and cutting-edge technologies. Let's build something amazing together.
-                            </p>
+                            Passionate about creating innovative solutions with code, I transform 
+                            ideas into reality through clean, efficient, and scalable applications.
+                        </motion.p>
+
+                        {/* CTA Buttons */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 1.4 }}
+                            className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-6"
+                        >
+                            <button
+                                onClick={handleViewWork}
+                                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 text-lg"
+                            >
+                                View My Work
+                            </button>
+                            <button
+                                onClick={handleContact}
+                                className="px-8 py-4 border-2 border-blue-500 text-blue-400 hover:bg-blue-500 hover:text-white font-semibold rounded-lg transition-all duration-300 text-lg"
+                            >
+                                Get In Touch
+                            </button>
                         </motion.div>
 
-                        <motion.div 
-                            variants={itemVariants}
-                            className="flex flex-wrap gap-4 mb-12"
+                        {/* Social Links - Removed */}
+                        <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.9, duration: 0.8 }}
+                            transition={{ duration: 0.6, delay: 1.6 }}
+                            className="flex justify-center lg:justify-start gap-4"
                         >
-                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                <Link to="/projects" className="btn-primary">
-                                    View My Work
-                                </Link>
-                            </motion.div>
-                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                <Link to="/about" className="btn-secondary">
-                                    About Me
-                                </Link>
-                            </motion.div>
-                            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                                <a 
-                                    href="https://github.com/puneet-jr"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="btn-secondary"
-                                >
-                                    GitHub
-                                </a>
-                            </motion.div>
-                        </motion.div>
-
-                        {/* Professional Stats/Highlights */}
-                        <motion.div 
-                            className="grid grid-cols-3 gap-4 mt-8"
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 1.1, duration: 0.8 }}
-                        >
-                            <motion.div 
-                                className="text-center p-4 bg-gradient-to-b from-blue-500/10 to-transparent rounded-lg backdrop-blur-sm border border-blue-500/20"
-                                whileHover={{ scale: 1.05, backgroundColor: "rgba(59, 130, 246, 0.1)" }}
-                            >
-                                <div className="text-2xl font-bold text-blue-400">5+</div>
-                                <div className="text-sm text-gray-400">Projects</div>
-                            </motion.div>
-                            <motion.div 
-                                className="text-center p-4 bg-gradient-to-b from-purple-500/10 to-transparent rounded-lg backdrop-blur-sm border border-purple-500/20"
-                                whileHover={{ scale: 1.05, backgroundColor: "rgba(147, 51, 234, 0.1)" }}
-                            >
-                                <div className="text-2xl font-bold text-purple-400">2+</div>
-                                <div className="text-sm text-gray-400">Years Coding</div>
-                            </motion.div>
-                            <motion.div 
-                                className="text-center p-4 bg-gradient-to-b from-green-500/10 to-transparent rounded-lg backdrop-blur-sm border border-green-500/20"
-                                whileHover={{ scale: 1.05, backgroundColor: "rgba(34, 197, 94, 0.1)" }}
-                            >
-                                <div className="text-2xl font-bold text-green-400">VIT</div>
-                                <div className="text-sm text-gray-400">Student</div>
-                            </motion.div>
+                            {/* Social icons removed as requested */}
                         </motion.div>
                     </motion.div>
                 </div>
-            </motion.div>
+            </div>
         </section>
     );
 };
+
+export default Home;
